@@ -1,0 +1,19 @@
+[project]
+name = "pet-care"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "k1ttywh1t9",email = "k1ttywh1t9@gmail.com"}
+]
+license = {text = "mit"}
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi (>=0.115.12,<0.116.0)",
+    "uvicorn[standart] (>=0.34.2,<0.35.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
