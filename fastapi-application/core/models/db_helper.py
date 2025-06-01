@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     async_sessionmaker,
     AsyncSession,
-    async_engine_from_config,
+    create_async_engine,
 )
 
 from core.config import settings
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 
 class DatabaseHelper:
     def __init__(self, config: dict):
-        self.engine: AsyncEngine = async_engine_from_config(config)
+        self.engine: AsyncEngine = create_async_engine(**config)
         self.session_factory: async_sessionmaker[AsyncSession] = async_sessionmaker(
             bind=self.engine,
             autoflush=False,
