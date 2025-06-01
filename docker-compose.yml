@@ -1,0 +1,19 @@
+services:
+
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+    ports:
+      - "${DB_PORT}"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+      PGADMIN_CONFIG_SERVER_MODE: "${PGADMIN_CONFIG_SERVER_MODE}"
+    ports:
+      - "${PGADMIN_PORT}"
