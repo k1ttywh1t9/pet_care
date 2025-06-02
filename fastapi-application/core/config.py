@@ -24,6 +24,12 @@ class ApiConfig(BaseModel):
     prefix: str = "/api"
 
 
+class AccessToken(BaseModel):
+    lifetime_seconds: int = 3600
+    private_key_path: Path = BASE_DIR / "certs" / "jwt-private.pem"
+    public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=(".env.template", ".env"),
@@ -35,6 +41,7 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api: ApiConfig = ApiConfig()
     db: DatabaseConfig
+    access_token: AccessToken = AccessToken()
 
 
 settings = Settings()
