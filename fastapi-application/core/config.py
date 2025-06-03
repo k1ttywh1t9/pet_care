@@ -26,6 +26,8 @@ class ApiConfig(BaseModel):
 
 class AccessToken(BaseModel):
     lifetime_seconds: int = 3600
+    reset_password_token_secret: str
+    verification_token_secret: str
     private_key_path: Path = BASE_DIR / "certs" / "jwt-private.pem"
     public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
 
