@@ -29,6 +29,12 @@ class ApiConfig(BaseModel):
     prefix: str = "/api"
     v1: ApiV1Config = ApiV1Config()
 
+    @property
+    def bearer_token_url(self) -> str:
+        parts = (self.prefix, self.v1.prefix, self.v1.auth, "/login")
+        path = "".join(parts).removeprefix("/")
+        return path
+
 
 class AccessToken(BaseModel):
     lifetime_seconds: int = 3600
@@ -49,7 +55,7 @@ class Settings(BaseSettings):
     run: RunConfig = RunConfig()
     api: ApiConfig = ApiConfig()
     db: DatabaseConfig
-    access_token: AccessToken = AccessToken()
+    access_token: AccessToken
 
 
 settings = Settings()
