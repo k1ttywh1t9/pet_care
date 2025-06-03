@@ -1,13 +1,12 @@
 from fastapi_users_db_sqlalchemy import SQLAlchemyBaseUserTable, SQLAlchemyUserDatabase
-from sqlalchemy import Integer
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base
+from .mixins.id_int_pk import IdIntPkMixin
+from core.types import UserIdType
 
 
-class User(SQLAlchemyBaseUserTable[int], Base):
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+class User(IdIntPkMixin, SQLAlchemyBaseUserTable[UserIdType], Base):
 
     @classmethod
     async def get_db(
