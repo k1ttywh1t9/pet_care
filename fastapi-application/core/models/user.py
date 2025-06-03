@@ -9,11 +9,11 @@ from core.types import UserIdType
 class User(IdIntPkMixin, SQLAlchemyBaseUserTable[UserIdType], Base):
 
     @classmethod
-    async def get_db(
+    def get_db(
         cls,
         session: AsyncSession,
     ):
-        yield SQLAlchemyUserDatabase(
+        return SQLAlchemyUserDatabase(
             session=session,
             user_table=cls,
         )
