@@ -15,3 +15,7 @@ SQLAlchemy create engine https://docs.sqlalchemy.org/en/20/core/engines.html#sql
 - Alembic + asyncio recipe https://alembic.sqlalchemy.org/en/latest/cookbook.html#using-asyncio-with-alembic
 - orjson https://github.com/ijl/orjson
 - FastAPI ORJSONResponse https://fastapi.tiangolo.com/advanced/custom-response/#use-orjsonresponseAdd commentMore actions
+
+```shell
+python -c 'import secrets; print(secrets.token_hex())'
+```
