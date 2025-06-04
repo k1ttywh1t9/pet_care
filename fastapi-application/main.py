@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 
+from actions.create_superuser import create_superuser
 from api import router as api_router
 from core.config import settings
 from core.models import db_helper
@@ -10,6 +11,7 @@ from core.models import db_helper
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # on startup
+    await create_superuser(**settings.admin.model_dump())
     yield
     # on shutdown
     await db_helper.dispose()
