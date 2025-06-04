@@ -37,6 +37,14 @@ class ApiConfig(BaseModel):
         return path
 
 
+class Admin(BaseModel):
+    email: str
+    password: str
+    is_active: bool = True
+    is_superuser: bool = True
+    is_verified: bool = True
+
+
 class AccessToken(BaseModel):
     lifetime_seconds: int = 3600
     reset_password_token_secret: str
@@ -57,6 +65,7 @@ class Settings(BaseSettings):
     api: ApiConfig = ApiConfig()
     db: DatabaseConfig
     access_token: AccessToken
+    admin: Admin
 
 
 settings = Settings()
