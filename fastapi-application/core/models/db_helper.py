@@ -40,6 +40,12 @@ class DatabaseHelper:
         )
         return session
 
+    async def scoped_session_dependency(self) -> "AsyncGenerator[AsyncSession, None]":
+        async with self.get_scoped_session() as session:
+            yield session
+            await session.remove()
+
+
 db_helper = DatabaseHelper(
     settings.db.model_dump(),
 )
