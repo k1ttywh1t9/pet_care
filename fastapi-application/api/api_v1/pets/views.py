@@ -8,12 +8,11 @@ from . import crud
 from .schemas import PetRead, PetCreate
 
 router = APIRouter(
-    prefix="/pets",
     tags=["Pets"],
 )
 
 
-@router.get("", response_model=list[PetRead])
+@router.get("/", response_model=list[PetRead])
 async def get_pets(
     session: Annotated[
         AsyncSession,
@@ -40,7 +39,7 @@ async def get_pet(
     )
 
 
-@router.post("", response_model=PetRead)
+@router.post("/", response_model=PetRead)
 async def create_pet(
     session: Annotated[
         AsyncSession,

@@ -14,7 +14,6 @@ fastapi_users = FastAPIUsers[User, UserIdType](
 )
 
 router = APIRouter(
-    prefix=settings.api.v1.users,
     tags=["Users"],
 )
 
