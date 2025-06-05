@@ -9,7 +9,7 @@ class PetBase(BaseModel):
 
 
 class PetRead(PetBase):
-    id: int = 0
+    id: int
 
 
 class PetCreate(PetBase):
