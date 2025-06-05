@@ -16,4 +16,5 @@ router.include_router(
 
 router.include_router(
     router=pets_router,
+    prefix=settings.api.v1.pets,
 )
