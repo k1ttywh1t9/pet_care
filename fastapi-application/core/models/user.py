@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class User(IdIntPkMixin, SQLAlchemyBaseUserTable[UserIdType], Base):
-    pets: Mapped[list["Pet"]] = relationship()
+    pets: Mapped[list["Pet"]] = relationship(back_populates="owner")
 
     @classmethod
     def get_db(
