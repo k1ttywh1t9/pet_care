@@ -11,6 +11,7 @@ router = APIRouter(
 
 router.include_router(
     router=users_router,
+    prefix=settings.api.v1.users,
 )
 
 router.include_router(
