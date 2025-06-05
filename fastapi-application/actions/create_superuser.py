@@ -3,11 +3,13 @@ import contextlib
 
 import logging
 
+from api.api_v1.users.schemas import UserCreate
+
 log = logging.getLogger(__name__)
 
 from fastapi_users.exceptions import UserAlreadyExists
 
-from api.api_v1.schemas import UserCreate
+
 from api.dependencies.authentication.user_manager import get_user_manager
 from api.dependencies.authentication.users import get_users_db
 from core.authentication import UserManager
