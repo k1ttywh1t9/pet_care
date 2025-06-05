@@ -2,9 +2,7 @@ from fastapi import APIRouter
 from .auth import router as auth_router
 from .views import router as views_router
 
-router = APIRouter(
-    tags=["Users"],
-)
+router = APIRouter()
 
 router.include_router(
     router=auth_router,
