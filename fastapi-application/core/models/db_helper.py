@@ -1,10 +1,12 @@
 from typing import TYPE_CHECKING
+from asyncio import current_task
 
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
     async_sessionmaker,
     AsyncSession,
     create_async_engine,
+    async_scoped_session,
 )
 
 from core.config import settings
@@ -31,6 +33,12 @@ class DatabaseHelper:
         async with self.session_factory() as session:
             yield session
 
+    def get_scoped_session(self):
+        session = async_scoped_session(
+            session_factory=self.session_factory,
+            scopefunc=current_task,
+        )
+        return session
 
 db_helper = DatabaseHelper(
     settings.db.model_dump(),
