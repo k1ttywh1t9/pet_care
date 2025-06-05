@@ -16,7 +16,7 @@ router = APIRouter(
 async def get_pets(
     session: Annotated[
         AsyncSession,
-        Depends(db_helper.scoped_session_dependency),
+        Depends(db_helper.session_dependency),
     ],
 ):
     return await crud.read_pets(session=session)
@@ -24,10 +24,10 @@ async def get_pets(
 
 @router.get("/{pet_id}", response_model=PetRead)
 async def get_pet(
-    pet_id,
+    pet_id: int,
     session: Annotated[
         AsyncSession,
-        Depends(db_helper.scoped_session_dependency),
+        Depends(db_helper.session_dependency),
     ],
 ):
     pet = await crud.read_pet(session=session, pet_id=pet_id)
@@ -43,7 +43,7 @@ async def get_pet(
 async def create_pet(
     session: Annotated[
         AsyncSession,
-        Depends(db_helper.scoped_session_dependency),
+        Depends(db_helper.session_dependency),
     ],
     pet_create: PetCreate,
 ):
