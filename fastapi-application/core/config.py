@@ -24,6 +24,7 @@ class ApiV1Config(BaseModel):
     prefix: str = "/v1"
     auth: str = "/auth"
     users: str = "/users"
+    pets: str = "/pets"
 
 
 class ApiConfig(BaseModel):
