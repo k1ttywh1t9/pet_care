@@ -10,6 +10,6 @@ from core.types import UserIdType
 class Pet(IdIntPkMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
 
-    owner: Mapped[UserIdType] = mapped_column(
+    owner_id: Mapped[UserIdType] = mapped_column(
         ForeignKey("user.id"),
     )
