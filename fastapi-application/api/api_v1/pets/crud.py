@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.engine import Result
 
 from core.models import Pet
-from .schemas import PetCreate
+from .schemas import PetCreate, PetUpdate, PetRead
 
 
 async def create_pet(session: AsyncSession, pet_create: PetCreate) -> Pet:
@@ -32,9 +32,17 @@ async def read_pet(session: AsyncSession, pet_id: int) -> Pet | None:
     return await session.get(Pet, pet_id)
 
 
-async def update_pet(session: AsyncSession) -> Pet:
-    pass
+async def update_pet(
+    session: AsyncSession,
+    pet: Pet,
+    pet_update: PetUpdate,
+) -> Pet:
+    for name, value in pet_update.model_dump(exclude_unset=True).items():
+        setattr(pet, name, value)
+    await session.commit()
+    return pet
 
 
-async def delete_pet(session: AsyncSession) -> None:
-    pass
+async def delete_pet(session: AsyncSession, pet: Pet) -> None:
+    await session.delete(pet)
+    await session.commit()
