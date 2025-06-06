@@ -27,8 +27,11 @@ async def create_pet(
     return pet
 
 
-async def read_pets(session: AsyncSession) -> list[Pet]:
-    stmt = select(Pet).order_by(Pet.id)
+async def read_pets(
+    session: AsyncSession,
+    owner_id: UserIdType,
+) -> list[Pet]:
+    stmt = select(Pet).where(Pet.owner_id == owner_id).order_by(Pet.id)
     result: Result = await session.execute(statement=stmt)
     pets = list(result.scalars().all())
     return pets
