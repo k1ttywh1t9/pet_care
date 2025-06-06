@@ -37,8 +37,14 @@ async def read_pets(
     return pets
 
 
-async def read_pet(session: AsyncSession, pet_id: int) -> Pet | None:
-    return await session.get(Pet, pet_id)
+async def read_pet(
+    session: AsyncSession,
+    pet_id: int,
+    owner_id: UserIdType,
+) -> Pet | None:
+    pet = await session.get(Pet, pet_id)
+    if pet and pet.owner_id == owner_id:
+        return pet
 
 
 async def update_pet(
