@@ -10,11 +10,17 @@ from sqlalchemy import select
 from sqlalchemy.engine import Result
 
 from core.models import Pet
+from core.types import UserIdType
 from .schemas import PetCreate, PetUpdate, PetRead
 
 
-async def create_pet(session: AsyncSession, pet_create: PetCreate) -> Pet:
+async def create_pet(
+    session: AsyncSession,
+    pet_create: PetCreate,
+    owner_id: UserIdType,
+) -> Pet:
     pet: Pet = Pet(**pet_create.model_dump())
+    pet.owner_id = owner_id
     session.add(pet)
     await session.commit()
     # await session.refresh(pet)
