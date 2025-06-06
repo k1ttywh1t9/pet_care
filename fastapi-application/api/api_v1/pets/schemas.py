@@ -16,5 +16,6 @@ class PetCreate(PetBase):
     pass
 
 
-class PetUpdate(PetBase):
-    pass
+class PetUpdate(PetCreate):
+    name: str | None = None
+    owner_id: UserIdType | None = None
