@@ -5,11 +5,11 @@ from core.types import UserIdType
 
 class PetBase(BaseModel):
     name: str
-    owner_id: UserIdType
 
 
 class PetRead(PetBase):
     id: int
+    owner_id: UserIdType
 
 
 class PetCreate(PetBase):
@@ -18,4 +18,3 @@ class PetCreate(PetBase):
 
 class PetUpdate(PetCreate):
     name: str | None = None
-    owner_id: UserIdType | None = None
