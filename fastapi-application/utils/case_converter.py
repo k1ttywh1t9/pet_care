@@ -4,13 +4,13 @@ def camel_case_to_snake_case(input_str: str) -> str:
     """BEBRANotion => bebra_abbr"""
 
     chars = []
-    for curr_indx, char in enumerate(input_str):
-        if curr_indx and char.isupper():
-            next_indx = curr_indx + 1
+    for curr_idx, char in enumerate(input_str):
+        if curr_idx and char.isupper():
+            next_idx = curr_idx + 1
 
             # separate abbr flag
-            flag = next_indx >= len(input_str) or input_str[next_indx].isupper()
-            prev_char = input_str[curr_indx - 1]
+            flag = next_idx >= len(input_str) or input_str[next_idx].isupper()
+            prev_char = input_str[curr_idx - 1]
             if prev_char.isupper() and flag:
                 pass
             else:
