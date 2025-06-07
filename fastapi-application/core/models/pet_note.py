@@ -7,5 +7,5 @@ from core.types import UserIdType
 
 
 class PetNote(IdIntPkMixin, Base):
-    pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"))
+    pet_id: Mapped[int] = mapped_column(ForeignKey("pet.id"))
     user_id: Mapped[UserIdType] = mapped_column(ForeignKey("user.id"))
