@@ -5,29 +5,10 @@ Update
 Delete
 """
 
-from typing import TYPE_CHECKING
-
 from sqlalchemy import select, Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
-if TYPE_CHECKING:
-    from sqlalchemy.orm import DeclarativeBase
-    from pydantic import BaseModel
-
-    class EntityModel(DeclarativeBase):
-        pass
-
-    class EntitySchema(BaseModel):
-        pass
-
-    class EntityCreateSchema(EntitySchema):
-        pass
-
-    class EntityReadSchema(EntitySchema):
-        pass
-
-    class EntityUpdateSchema(EntityCreateSchema):
-        pass
+from core.types import UserIdType
 
 
 class CRUDService:
@@ -37,10 +18,12 @@ class CRUDService:
     async def create_entity(
         self,
         session: AsyncSession,
-        create_schema: "EntityCreateSchema",
+        user_id: UserIdType,
+        create_schema,
         **kwargs,
-    ) -> "EntityModel":
+    ):
         db_entity = self.model(**create_schema.model_dump())
+        db_entity.user_id = user_id
         session.add(db_entity)
         await session.commit()
         await session.refresh(db_entity)
@@ -49,9 +32,14 @@ class CRUDService:
     async def read_entities(
         self,
         session: AsyncSession,
+        user_id: UserIdType,
         **kwargs,
-    ) -> list["EntityModel"]:
-        stmt = select(self.model).order_by(self.model.id)
+    ):
+        stmt = (
+            select(self.model)
+            .where(self.model.user_id == user_id)
+            .order_by(self.model.id)
+        )
         result: Result = await session.execute(statement=stmt)
         entities = list(result.scalars().all())
         return entities
@@ -61,17 +49,17 @@ class CRUDService:
         session: AsyncSession,
         entity_id,
         **kwargs,
-    ) -> "EntityModel" | None:
+    ):
         db_entity = await session.get(self.model, entity_id)
         return db_entity
 
     async def update_entity(
         self,
         session: AsyncSession,
-        db_entity: "EntityModel",
-        update_schema: "EntityUpdateSchema",
+        db_entity,
+        update_schema,
         **kwargs,
-    ) -> "EntityModel":
+    ):
         for name, value in update_schema.model_dump(exclude_unset=True).items():
             setattr(db_entity, name, value)
         await session.commit()
@@ -80,7 +68,7 @@ class CRUDService:
     async def delete_entity(
         self,
         session: AsyncSession,
-        db_entity: "EntityModel",
+        db_entity,
     ) -> None:
         await session.delete(db_entity)
         await session.commit()
