@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
 
-from .mixins import IdIntPkMixin
+from .mixins import IdIntPkMixin, UserIdFkMixin
 from core.types import UserIdType
 
 
@@ -13,11 +13,7 @@ if TYPE_CHECKING:
     from .user import User
 
 
-class Pet(IdIntPkMixin, Base):
+class Pet(IdIntPkMixin, UserIdFkMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
-
-    user_id: Mapped[UserIdType] = mapped_column(
-        ForeignKey("user.id"),
-    )
 
     owner: Mapped["User"] = relationship(back_populates="pets")
