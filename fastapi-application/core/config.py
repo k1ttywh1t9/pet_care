@@ -25,6 +25,7 @@ class ApiV1Config(BaseModel):
     auth: str = "/auth"
     users: str = "/users"
     pets: str = "/pets"
+    pet_notes: str = "/pet_notes"
 
 
 class ApiConfig(BaseModel):
