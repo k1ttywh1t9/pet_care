@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api.api_v1.expense_entry.schemas import (
+from api.api_v1.expense_entries.schemas import (
     ExpenseEntryCreate,
     ExpenseEntryRead,
     ExpenseEntryUpdate,
