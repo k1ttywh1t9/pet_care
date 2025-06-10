@@ -4,7 +4,6 @@ from sqlalchemy.testing.schema import mapped_column
 
 from core.models import Base
 from core.models.mixins import IdIntPkMixin, TimestampMixin, UserIdFkMixin
-from core.types import UserIdType
 
 
 class ExpenseEntry(IdIntPkMixin, UserIdFkMixin, TimestampMixin, Base):
