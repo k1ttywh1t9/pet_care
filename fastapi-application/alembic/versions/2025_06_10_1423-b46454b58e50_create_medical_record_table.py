@@ -1,8 +1,8 @@
-"""create expense_entries table
+"""create medical_record table
 
-Revision ID: 9a73c0970694
-Revises: bcfa0cdbbf4e
-Create Date: 2025-06-10 10:15:59.015191
+Revision ID: b46454b58e50
+Revises: 9a73c0970694
+Create Date: 2025-06-10 14:23:48.760842
 
 """
 
@@ -13,20 +13,23 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = "9a73c0970694"
-down_revision: Union[str, None] = "bcfa0cdbbf4e"
+revision: str = "b46454b58e50"
+down_revision: Union[str, None] = "9a73c0970694"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
     op.create_table(
-        "expense_entries",
-        sa.Column("pet_id", sa.Integer(), nullable=False),
-        sa.Column("amount", sa.Integer(), nullable=False),
-        sa.Column("purpose", sa.String(), nullable=True),
+        "medical_record",
+        sa.Column("date_performed", sa.Date(), nullable=False),
+        sa.Column("next_due_date", sa.Date(), nullable=True),
+        sa.Column("details", sa.Text(), nullable=False),
+        sa.Column("content", sa.LargeBinary(), nullable=True),
+        sa.Column("is_archived", sa.Boolean(), nullable=False),
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("pet_id", sa.Integer(), nullable=False),
         sa.Column(
             "created_at",
             sa.DateTime(timezone=True),
@@ -52,4 +55,4 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.drop_table("expense_entries")
+    op.drop_table("medical_record")

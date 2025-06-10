@@ -27,6 +27,7 @@ class ApiV1Config(BaseModel):
     pets: str = "/pets"
     pet_notes: str = "/pet_notes"
     expense_entries: str = "/expense_entries"
+    medical_records: str = "/medical_records"
 
 
 class ApiConfig(BaseModel):
