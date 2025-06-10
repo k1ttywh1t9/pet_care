@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 class Pet(IdIntPkMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
 
-    owner_id: Mapped[UserIdType] = mapped_column(
+    user_id: Mapped[UserIdType] = mapped_column(
         ForeignKey("user.id"),
     )
 
