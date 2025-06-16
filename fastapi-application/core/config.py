@@ -57,7 +57,7 @@ class AccessToken(BaseModel):
     public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
 
 
-class FrontendAppConnectionConfig:
+class FrontendAppConnectionConfig(BaseModel):
     host: str
     port: str
 
