@@ -9,7 +9,7 @@ class PetBase(BaseModel):
 
 class PetRead(PetBase):
     id: int
-    owner_id: UserIdType
+    user_id: UserIdType
 
 
 class PetCreate(PetBase):
