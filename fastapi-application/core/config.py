@@ -57,6 +57,11 @@ class AccessToken(BaseModel):
     public_key_path: Path = BASE_DIR / "certs" / "jwt-public.pem"
 
 
+class FrontendAppConnectionConfig:
+    host: str
+    port: str
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=(".env.template", ".env"),
@@ -70,6 +75,7 @@ class Settings(BaseSettings):
     db: DatabaseConfig
     access_token: AccessToken
     admin: Admin
+    frontend_app_connection_config: FrontendAppConnectionConfig
 
 
 settings = Settings()
