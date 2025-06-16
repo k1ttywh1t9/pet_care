@@ -23,6 +23,7 @@ main_app = FastAPI(lifespan=lifespan)
 origins = [
     f"http://{settings.run.host}",
     f"http://{settings.run.host}:{settings.run.port}",
+    f"http://{settings.frontend_app_connection_config.host}",
     f"http://{settings.frontend_app_connection_config.host}:{settings.frontend_app_connection_config.port}"
 ]
 
