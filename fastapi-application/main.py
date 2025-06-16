@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from actions.create_superuser import create_superuser
 from api import router as api_router
@@ -18,6 +19,21 @@ async def lifespan(app: FastAPI):
 
 
 main_app = FastAPI(lifespan=lifespan)
+
+origins = [
+    f"http://{settings.run.host}",
+    f"http://{settings.run.host}:{settings.run.port}",
+    "http://localhost:5173",
+    "http://localhost:5174",
+]
+
+main_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 main_app.include_router(
     router=api_router,
