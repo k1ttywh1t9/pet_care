@@ -7,5 +7,5 @@ from core.models.mixins.pet_id_fk import PetIdFkMixin
 
 
 class ExpenseEntry(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Base):
-    amount: Mapped[int] = mapped_column()
-    purpose: Mapped[str | None] = mapped_column()
+    amount: Mapped[int]
+    purpose: Mapped[str | None]
