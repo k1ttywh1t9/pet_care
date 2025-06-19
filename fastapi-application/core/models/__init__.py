@@ -13,5 +13,5 @@ from .base import Base
 from .user import User
 from .pet import Pet
 from .pet_note import PetNote
-from .expence_entry import ExpenseEntry
+from .expense_entry import ExpenseEntry
 from .medical_record import MedicalRecord
