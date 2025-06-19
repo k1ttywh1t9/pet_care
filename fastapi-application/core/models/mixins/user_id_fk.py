@@ -6,5 +6,8 @@ from core.types import UserIdType
 
 class UserIdFkMixin:
     user_id: Mapped[UserIdType] = mapped_column(
-        ForeignKey("user.id"),
+        ForeignKey(
+            "user.id",
+            ondelete="SET NULL",
+        ),
     )
