@@ -1,9 +1,13 @@
-from sqlalchemy import ForeignKey, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from typing import TYPE_CHECKING
 
-from core.models import Base
-from core.models.mixins import IdIntPkMixin, TimestampMixin, UserIdFkMixin
-from core.models.mixins.pet_id_fk import PetIdFkMixin
+from sqlalchemy import Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from .base import Base
+from core.models.mixins import IdIntPkMixin, TimestampMixin, UserIdFkMixin, PetIdFkMixin
+
+if TYPE_CHECKING:
+    from .pet import Pet
 
 
 class PetNote(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Base):
@@ -11,3 +15,5 @@ class PetNote(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Base):
         Text,
         nullable=False,
     )
+
+    pet: Mapped["Pet"] = relationship()
