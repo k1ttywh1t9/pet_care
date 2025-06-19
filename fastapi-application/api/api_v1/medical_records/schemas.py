@@ -4,7 +4,7 @@ from api.api_v1.mixins.id import IdMixin, PetIdMixin
 from api.api_v1.mixins.timestamp import TimestampMixin
 
 
-class MedicalRecordBase(BaseModel):
+class MedicalRecordBase(PetIdMixin, BaseModel):
     name: str
     content: bytes
 
@@ -13,10 +13,11 @@ class MedicalRecordCreate(MedicalRecordBase):
     pass
 
 
-class MedicalRecordRead(IdMixin, PetIdMixin, TimestampMixin, MedicalRecordBase):
+class MedicalRecordRead(IdMixin, TimestampMixin, MedicalRecordBase):
     pass
 
 
 class MedicalRecordUpdate(MedicalRecordCreate):
+    pet_id: int | None = None
     name: str | None = None
     content: str | None = None
