@@ -1,18 +1,21 @@
-from sqlalchemy import Date, Text, LargeBinary, String
-from sqlalchemy.orm import Mapped
-from datetime import date
+from typing import TYPE_CHECKING
 
-from sqlalchemy.testing.schema import mapped_column
+from sqlalchemy import LargeBinary, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from core.models import Base
-from core.models.mixins import IdIntPkMixin, TimestampMixin, UserIdFkMixin
-from core.models.mixins.pet_id_fk import PetIdFkMixin
+from .base import Base
+from core.models.mixins import IdIntPkMixin, TimestampMixin, UserIdFkMixin, PetIdFkMixin
+
+if TYPE_CHECKING:
+    from .pet import Pet
 
 
 class MedicalRecord(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
-    
+
     content: Mapped[bytes] = mapped_column(
         LargeBinary,
         nullable=True,
     )
+
+    pet: Mapped["Pet"] = relationship()
