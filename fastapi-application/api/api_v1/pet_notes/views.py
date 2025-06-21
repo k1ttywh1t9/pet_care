@@ -2,12 +2,16 @@ from fastapi import APIRouter
 
 from api.api_v1.pet_notes.schemas import PetNoteCreate, PetNoteRead, PetNoteUpdate
 from core.models import PetNote
-from crud import CRUDViewsFactory
+from crud import CRUDService
+from crud_router import CRUDRouterFactory
 
 router = APIRouter()
 
-crud_router = CRUDViewsFactory(
+crud_router = CRUDRouterFactory(
     model=PetNote,
+    service=CRUDService(
+        model=PetNote,
+    ),
 ).get_router(
     create_schema=PetNoteCreate,
     read_schema=PetNoteRead,
