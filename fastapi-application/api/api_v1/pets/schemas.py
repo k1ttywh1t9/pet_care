@@ -1,15 +1,14 @@
 from pydantic import BaseModel
 
-from core.types import UserIdType
+from api.api_v1.mixins import IdMixin, UserIdMixin
 
 
 class PetBase(BaseModel):
     name: str
 
 
-class PetRead(PetBase):
-    id: int
-    user_id: UserIdType
+class PetRead(IdMixin, UserIdMixin, PetBase):
+    pass
 
 
 class PetCreate(PetBase):
