@@ -1,12 +1,9 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
-from core.types import UserIdType
+from api.api_v1.mixins import PetIdMixin, IdMixin, UserIdMixin, TimestampMixin
 
 
-class PetNoteBase(BaseModel):
-    pet_id: int
+class PetNoteBase(PetIdMixin, BaseModel):
     content: str
 
 
@@ -14,10 +11,8 @@ class PetNoteCreate(PetNoteBase):
     pass
 
 
-class PetNoteRead(PetNoteBase):
-    id: int
-    user_id: UserIdType
-    created_at: datetime
+class PetNoteRead(IdMixin, UserIdMixin, TimestampMixin, PetNoteBase):
+    pass
 
 
 class PetNoteUpdate(PetNoteCreate):
