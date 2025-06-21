@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+from api.api_v1.mixins import UserIdMixin
 from api.api_v1.mixins.id import IdMixin, PetIdMixin
 from api.api_v1.mixins.timestamp import TimestampMixin
 
@@ -13,7 +14,7 @@ class MedicalRecordCreate(MedicalRecordBase):
     pass
 
 
-class MedicalRecordRead(IdMixin, TimestampMixin, MedicalRecordBase):
+class MedicalRecordRead(IdMixin, UserIdMixin, TimestampMixin, MedicalRecordBase):
     pass
 
 
