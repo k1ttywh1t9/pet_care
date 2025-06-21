@@ -1,12 +1,9 @@
-from datetime import datetime
-
 from pydantic import BaseModel
 
-from core.types import UserIdType
+from api.api_v1.mixins import PetIdMixin, IdMixin, UserIdMixin, TimestampMixin
 
 
-class ExpenseEntryBase(BaseModel):
-    pet_id: int
+class ExpenseEntryBase(PetIdMixin, BaseModel):
     amount: int
     purpose: str
 
@@ -15,11 +12,8 @@ class ExpenseEntryCreate(ExpenseEntryBase):
     pass
 
 
-class ExpenseEntryRead(ExpenseEntryBase):
-    id: int
-    user_id: UserIdType
-    created_at: datetime
-    updated_at: datetime
+class ExpenseEntryRead(IdMixin, UserIdMixin, TimestampMixin, ExpenseEntryBase):
+    pass
 
 
 class ExpenseEntryUpdate(ExpenseEntryCreate):
