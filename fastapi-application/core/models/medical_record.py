@@ -19,3 +19,4 @@ class MedicalRecord(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, B
     )
 
     pet: Mapped["Pet"] = relationship()
+    load_relations: list[str] = ["pet"]
