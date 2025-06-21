@@ -17,3 +17,4 @@ class PetNote(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Base):
     )
 
     pet: Mapped["Pet"] = relationship()
+    load_relations: list[str] = ["pet"]
