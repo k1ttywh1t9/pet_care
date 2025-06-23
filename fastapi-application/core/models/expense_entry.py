@@ -13,5 +13,7 @@ class ExpenseEntry(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Ba
     amount: Mapped[int]
     purpose: Mapped[str | None]
 
-    pet: Mapped["Pet"] = relationship()
+    pet: Mapped["Pet"] = relationship(
+        back_populates="expense_entries",
+    )
     load_relations: list[str] = ["pet"]
