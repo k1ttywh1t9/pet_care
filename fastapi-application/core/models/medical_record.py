@@ -18,5 +18,7 @@ class MedicalRecord(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, B
         nullable=True,
     )
 
-    pet: Mapped["Pet"] = relationship()
+    pet: Mapped["Pet"] = relationship(
+        back_populates="medical_records",
+    )
     load_relations: list[str] = ["pet"]
