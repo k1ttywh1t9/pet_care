@@ -17,7 +17,13 @@ class Pet(IdIntPkMixin, UserIdFkMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
 
     owner: Mapped["User"] = relationship(back_populates="pets")
-    notes: Mapped[list["PetNote"]] = relationship()
-    expense_entries: Mapped[list["ExpenseEntry"]] = relationship()
-    medical_records: Mapped[list["MedicalRecord"]] = relationship()
+    notes: Mapped[list["PetNote"]] = relationship(
+        back_populates="pet",
+    )
+    expense_entries: Mapped[list["ExpenseEntry"]] = relationship(
+        back_populates="pet",
+    )
+    medical_records: Mapped[list["MedicalRecord"]] = relationship(
+        back_populates="pet",
+    )
     load_relations: list[str] = ["notes", "expense_entries", "medical_records"]
