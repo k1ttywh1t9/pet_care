@@ -40,7 +40,7 @@ class ReadRouterFactory(FactoryBase):
             )
 
         @router.get(
-            "/{page}",
+            "/",
             response_model=list[ReadSchema],
         )
         async def get_paginated_entities(
