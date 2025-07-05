@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from api.api_v1.detail_schemas import (
+from api.api_v1.detail.schemas import (
     PetDetailsRead,
     PetNoteDetailsRead,
     ExpenseEntryDetailsRead,
