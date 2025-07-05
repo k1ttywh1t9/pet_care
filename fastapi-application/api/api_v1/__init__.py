@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from core.config import settings
 
 from .users import router as users_router
-from .detail_views import router as detail_router
+from api.api_v1.detail.views import router as detail_router
 from .pets import router as pets_router
 from .pet_notes import router as pet_notes_router
 from .expense_entries import router as expense_entries_router
