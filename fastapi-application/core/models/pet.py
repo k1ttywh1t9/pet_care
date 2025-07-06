@@ -15,6 +15,7 @@ if TYPE_CHECKING:
 
 class Pet(IdIntPkMixin, UserIdFkMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
+    image_url: Mapped[str | None]
 
     owner: Mapped["User"] = relationship(back_populates="pets")
     notes: Mapped[list["PetNote"]] = relationship(
