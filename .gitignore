@@ -196,3 +196,4 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 /certs/
+/fastapi-application/.env.aws
