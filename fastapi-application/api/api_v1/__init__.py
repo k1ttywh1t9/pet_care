@@ -8,6 +8,7 @@ from .pets import router as pets_router
 from .pet_notes import router as pet_notes_router
 from .expense_entries import router as expense_entries_router
 from .medical_records import router as medical_records_router
+from .upload import router as upload_router
 
 router = APIRouter(
     prefix=settings.api.v1.prefix,
@@ -41,4 +42,11 @@ router.include_router(
 router.include_router(
     router=medical_records_router,
     prefix=settings.api.v1.medical_records,
+)
+
+router.include_router(
+    router=upload_router,
+    tags=[
+        "Upload",
+    ],
 )
