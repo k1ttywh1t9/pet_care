@@ -4,9 +4,10 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper
+from crud.dependencies.get_service_dependencies import get_read_service_dependency
 from crud.dependencies.item_by_id import get_item_by_id
 from crud_router.elements.base import FactoryBase
-from crud_router.elements.types import ReadSchema, ORMModel
+from crud_router.elements.types import ReadSchema, ORMModel, ORMService
 from dependencies.current_active_user import get_current_active_user
 
 
@@ -14,14 +15,14 @@ class ReadRouterFactory(FactoryBase):
     def get_router(
         self,
         read_schema: Type[ReadSchema],
-    ):
+    ) -> APIRouter:
         router = APIRouter()
-
-        service = self.service
 
         read_schema.model_rebuild()
 
         ReadSchema = read_schema
+
+        model = self.model
 
         @router.get(
             "/",
@@ -31,6 +32,10 @@ class ReadRouterFactory(FactoryBase):
             session: Annotated[
                 AsyncSession,
                 Depends(db_helper.scoped_session_dependency),
+            ],
+            service: Annotated[
+                ORMService,
+                Depends(get_read_service_dependency(model)),
             ],
             user=Depends(get_current_active_user),
         ):
@@ -48,6 +53,10 @@ class ReadRouterFactory(FactoryBase):
                 AsyncSession,
                 Depends(db_helper.scoped_session_dependency),
             ],
+            service: Annotated[
+                ORMService,
+                Depends(get_read_service_dependency(model)),
+            ],
             page_number: int,
             page_size: int = 100,
             user=Depends(get_current_active_user),
@@ -64,7 +73,10 @@ class ReadRouterFactory(FactoryBase):
             response_model=ReadSchema,
         )
         async def get_entity(
-            entity: Annotated[Type[ORMModel], Depends(get_item_by_id(service=service))],
+            entity: Annotated[
+                Type[ORMModel],
+                Depends(get_item_by_id(model)),
+            ],
         ):
             return entity
 
