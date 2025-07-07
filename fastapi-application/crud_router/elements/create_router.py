@@ -4,8 +4,9 @@ from fastapi import APIRouter, Depends, Body, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper
+from crud.dependencies.get_service_dependencies import get_create_service_dependency
 from crud_router.elements.base import FactoryBase
-from crud_router.elements.types import CreateSchema, ReadSchema
+from crud_router.elements.types import CreateSchema, ReadSchema, ORMService
 from dependencies.current_active_user import get_current_active_user
 
 
@@ -14,7 +15,7 @@ class CreateRouterFactory(FactoryBase):
         self,
         create_schema: Type[CreateSchema],
         read_schema: Type[ReadSchema],
-    ):
+    ) -> APIRouter:
         router = APIRouter()
 
         create_schema.model_rebuild()
@@ -22,6 +23,8 @@ class CreateRouterFactory(FactoryBase):
 
         CreateSchema = create_schema
         ReadSchema = read_schema
+
+        model = self.model
 
         @router.post(
             "/",
@@ -33,10 +36,14 @@ class CreateRouterFactory(FactoryBase):
                 AsyncSession,
                 Depends(db_helper.scoped_session_dependency),
             ],
+            service: Annotated[
+                ORMService,
+                Depends(get_create_service_dependency(model)),
+            ],
             user=Depends(get_current_active_user),
             create_schema: CreateSchema = Body(...),
         ):
-            return await self.service.create_entity(
+            return await service.create_entity(
                 session=session,
                 user_id=user.id,
                 create_schema=create_schema,
