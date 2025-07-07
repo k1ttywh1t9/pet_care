@@ -2,12 +2,12 @@ from typing import Generic, Type
 
 from fastapi import APIRouter
 
-from crud_router.elements.base import FactoryBase
-from crud_router.elements.create_router import CreateRouterFactory
-from crud_router.elements.delete_router import DeleteRouterFactory
-from crud_router.elements.read_router import ReadRouterFactory
+from crud_router.elements import FactoryBase
+from crud_router.elements import CreateRouterFactory
+from crud_router.elements import DeleteRouterFactory
+from crud_router.elements import ReadRouterFactory
 from crud_router.elements.types import CreateSchema, ReadSchema, UpdateSchema, ORMModel
-from crud_router.elements.update_router import UpdateRouterFactory
+from crud_router.elements import UpdateRouterFactory
 
 
 class CRUDRouterFactory(Generic[CreateSchema, ReadSchema, UpdateSchema], FactoryBase):
