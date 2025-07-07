@@ -40,7 +40,7 @@ class ReadRouterFactory(FactoryBase):
             )
 
         @router.get(
-            "/",
+            "/page/{page_number}",
             response_model=list[ReadSchema],
         )
         async def get_paginated_entities(
@@ -48,14 +48,14 @@ class ReadRouterFactory(FactoryBase):
                 AsyncSession,
                 Depends(db_helper.scoped_session_dependency),
             ],
-            page: int = 0,
+            page_number: int,
             page_size: int = 100,
             user=Depends(get_current_active_user),
         ):
             return await service.read_paginated_entities(
                 session=session,
                 user_id=user.id,
-                offset=page * page_size - page_size,
+                offset=page_number * page_size - page_size,
                 limit=page_size,
             )
 
