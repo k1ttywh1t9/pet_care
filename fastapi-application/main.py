@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from actions.create_superuser import create_superuser
@@ -18,13 +19,16 @@ async def lifespan(app: FastAPI):
     await db_helper.dispose()
 
 
-main_app = FastAPI(lifespan=lifespan)
+main_app = FastAPI(
+    default_response_class=ORJSONResponse,
+    lifespan=lifespan,
+)
 
 origins = [
     f"http://{settings.run.host}",
     f"http://{settings.run.host}:{settings.run.port}",
     f"http://{settings.frontend_app_connection_config.host}",
-    f"http://{settings.frontend_app_connection_config.host}:{settings.frontend_app_connection_config.port}"
+    f"http://{settings.frontend_app_connection_config.host}:{settings.frontend_app_connection_config.port}",
 ]
 
 main_app.add_middleware(
