@@ -6,16 +6,20 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import db_helper
 from core.types import UserIdType
-from crud.service import CRUDService
+from crud.dependencies.get_service_dependencies import get_read_service_dependency
+from crud_router.elements.types import ORMModel, ORMService
 from dependencies.current_active_user import get_current_active_user
-from crud.elements.read_service import ReadService
 
 
-def get_item_by_id(service: CRUDService | ReadService):
+def get_item_by_id(model: ORMModel):
     async def dependency(
         session: Annotated[
             AsyncSession,
             Depends(db_helper.scoped_session_dependency),
+        ],
+        service: Annotated[
+            ORMService,
+            Depends(get_read_service_dependency(model)),
         ],
         user: Annotated[UserIdType, Depends(get_current_active_user)],
         item_id: Annotated[int, Path],
