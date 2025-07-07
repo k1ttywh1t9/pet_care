@@ -6,16 +6,12 @@ from api.api_v1.medical_records.schemas import (
     MedicalRecordUpdate,
 )
 from core.models import MedicalRecord
-from crud import CRUDService
 from crud_router import CRUDRouterFactory
 
 router = APIRouter()
 
 crud_router = CRUDRouterFactory(
     model=MedicalRecord,
-    service=CRUDService(
-        model=MedicalRecord,
-    ),
 ).get_router(
     create_schema=MedicalRecordCreate,
     read_schema=MedicalRecordRead,

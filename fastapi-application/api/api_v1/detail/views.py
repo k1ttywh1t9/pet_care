@@ -8,43 +8,30 @@ from api.api_v1.detail.schemas import (
 )
 from core.config import settings
 from core.models import Pet, PetNote, ExpenseEntry, MedicalRecord
-from crud.elements.read_service import ReadService
 from crud_router.elements.read_router import ReadRouterFactory
 
 router = APIRouter()
 
 read_pet_details_router = ReadRouterFactory(
     model=Pet,
-    service=ReadService(
-        model=Pet,
-    ),
 ).get_router(
     read_schema=PetDetailsRead,
 )
 
 read_pet_note_details_router = ReadRouterFactory(
     model=PetNote,
-    service=ReadService(
-        model=PetNote,
-    ),
 ).get_router(
     read_schema=PetNoteDetailsRead,
 )
 
 read_expense_entry_details_router = ReadRouterFactory(
     model=ExpenseEntry,
-    service=ReadService(
-        model=ExpenseEntry,
-    ),
 ).get_router(
     read_schema=ExpenseEntryDetailsRead,
 )
 
 read_medical_record_details_router = ReadRouterFactory(
     model=MedicalRecord,
-    service=ReadService(
-        model=MedicalRecord,
-    ),
 ).get_router(
     read_schema=MedicalRecordDetailsRead,
 )

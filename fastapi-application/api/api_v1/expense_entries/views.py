@@ -6,16 +6,12 @@ from api.api_v1.expense_entries.schemas import (
     ExpenseEntryUpdate,
 )
 from core.models import ExpenseEntry
-from crud import CRUDService
 from crud_router import CRUDRouterFactory
 
 router = APIRouter()
 
 crud_router = CRUDRouterFactory(
     model=ExpenseEntry,
-    service=CRUDService(
-        model=ExpenseEntry,
-    ),
 ).get_router(
     create_schema=ExpenseEntryCreate,
     read_schema=ExpenseEntryRead,

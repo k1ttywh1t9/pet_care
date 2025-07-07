@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 
 from core.models import Pet
-from crud import CRUDService
 from crud_router import CRUDRouterFactory
 from .schemas import PetRead, PetCreate, PetUpdate
 
@@ -9,9 +8,6 @@ router = APIRouter()
 
 crud_router = CRUDRouterFactory(
     model=Pet,
-    service=CRUDService(
-        model=Pet,
-    ),
 ).get_router(
     create_schema=PetCreate,
     read_schema=PetRead,
