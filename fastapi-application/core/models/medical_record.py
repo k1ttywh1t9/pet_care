@@ -12,11 +12,7 @@ if TYPE_CHECKING:
 
 class MedicalRecord(IdIntPkMixin, UserIdFkMixin, PetIdFkMixin, TimestampMixin, Base):
     name: Mapped[str] = mapped_column(String(60))
-
-    content: Mapped[bytes] = mapped_column(
-        LargeBinary,
-        nullable=True,
-    )
+    document_url: Mapped[str | None]
 
     pet: Mapped["Pet"] = relationship(
         back_populates="medical_records",

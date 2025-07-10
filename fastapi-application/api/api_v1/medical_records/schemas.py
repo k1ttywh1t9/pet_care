@@ -5,7 +5,6 @@ from pydantic import (
     Field,
     ConfigDict,
     HttpUrl,
-    field_validator,
 )
 
 from api.api_v1.mixins import (
@@ -36,7 +35,9 @@ class MedicalRecordRead(
     TimestampMixin,
     MedicalRecordBase,
 ):
-    document_url: str
+    document_url: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MedicalRecordUpdate(
@@ -50,10 +51,3 @@ class MedicalRecordDocumentUpdate(
     MedicalRecordUpdate,
 ):
     document_url: str
-
-    @field_validator("document_url", mode="after")
-    @classmethod
-    def validate_document_url(cls, url: str) -> str:
-        if url is None:
-            return None
-        return url
