@@ -1,9 +1,12 @@
 __all__ = (
-    "IdMixin",
-    "UserIdMixin",
-    "PetIdMixin",
+    "IdFieldMixin",
+    "UserIdFieldMixin",
+    "PetIdFieldMixin",
+    "PetIdOptionalFieldMixin",
     "TimestampMixin",
 )
 
-from .id import IdMixin, UserIdMixin, PetIdMixin
+from .id_mixin import IdFieldMixin
+from .user_id_mixin import UserIdFieldMixin
+from .pet_id_mixin import PetIdFieldMixin, PetIdOptionalFieldMixin
 from .timestamp import TimestampMixin
