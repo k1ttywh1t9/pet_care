@@ -1,14 +1,16 @@
-from pydantic import BaseModel
+from typing import Annotated, Optional
 
-from api.api_v1.mixins import IdMixin, UserIdMixin
+from pydantic import BaseModel, Field
+
+from api.api_v1.mixins import IdFieldMixin, UserIdFieldMixin
 
 
 class PetBase(BaseModel):
-    name: str
+    name: Annotated[str, Field(max_length=35)]
     image_url: str | None = None
 
 
-class PetRead(IdMixin, UserIdMixin, PetBase):
+class PetRead(IdFieldMixin, UserIdFieldMixin, PetBase):
     pass
 
 
@@ -17,4 +19,4 @@ class PetCreate(PetBase):
 
 
 class PetUpdate(PetCreate):
-    name: str | None = None
+    name: Annotated[Optional[str], Field(max_length=35)]
