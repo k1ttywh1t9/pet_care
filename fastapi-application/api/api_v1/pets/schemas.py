@@ -10,7 +10,7 @@ class PetBase(BaseModel):
 
 
 class PetRead(IdFieldMixin, UserIdFieldMixin, PetBase):
-    pass
+    image_url: str | None = None
 
 
 class PetCreate(PetBase):
