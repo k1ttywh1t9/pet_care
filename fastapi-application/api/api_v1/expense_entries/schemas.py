@@ -38,5 +38,5 @@ class ExpenseEntryUpdate(
     PetIdOptionalFieldMixin,
     ExpenseEntryCreate,
 ):
-    amount: Annotated[Optional[int], Field(ge=0)]
-    purpose: Annotated[Optional[str], Field(max_length=35)]
+    amount: Annotated[Optional[int], Field(ge=0)] = None
+    purpose: Annotated[Optional[str], Field(max_length=35)] = None

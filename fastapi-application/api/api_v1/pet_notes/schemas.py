@@ -19,4 +19,4 @@ class PetNoteRead(IdFieldMixin, UserIdFieldMixin, TimestampMixin, PetNoteBase):
 
 
 class PetNoteUpdate(PetIdOptionalFieldMixin, PetNoteCreate):
-    content: Annotated[Optional[str], Field(max_length=255)]
+    content: Annotated[Optional[str], Field(max_length=255)] = None

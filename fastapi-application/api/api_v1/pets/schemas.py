@@ -18,7 +18,7 @@ class PetCreate(PetBase):
 
 
 class PetUpdate(PetCreate):
-    name: Annotated[Optional[str], Field(max_length=35)]
+    name: Annotated[Optional[str], Field(max_length=35)] = None
 
 
 class PetAvatarUpdate(PetUpdate):

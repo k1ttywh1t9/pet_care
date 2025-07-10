@@ -38,5 +38,5 @@ class MedicalRecordUpdate(
     PetIdOptionalFieldMixin,
     MedicalRecordCreate,
 ):
-    name: Annotated[Optional[str], Field(max_length=35)]
+    name: Annotated[Optional[str], Field(max_length=35)] = None
     content: bytes | None = None

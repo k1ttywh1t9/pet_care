@@ -8,4 +8,4 @@ class PetIdFieldMixin:
 
 
 class PetIdOptionalFieldMixin:
-    pet_id: Annotated[Optional[int], Field(gt=0)]
+    pet_id: Annotated[Optional[int], Field(gt=0)] = None
