@@ -1,22 +1,42 @@
-from pydantic import BaseModel
+from typing import Annotated, Optional
 
-from api.api_v1.mixins import PetIdMixin, IdMixin, UserIdMixin, TimestampMixin
+from pydantic import BaseModel, Field
+
+from api.api_v1.mixins import (
+    TimestampMixin,
+    PetIdFieldMixin,
+    PetIdOptionalFieldMixin,
+    IdFieldMixin,
+    UserIdFieldMixin,
+)
 
 
-class ExpenseEntryBase(PetIdMixin, BaseModel):
-    amount: int
-    purpose: str
+class ExpenseEntryBase(
+    PetIdFieldMixin,
+    BaseModel,
+):
+    amount: Annotated[int, Field(ge=0)]
+    purpose: Annotated[str, Field(max_length=35)]
 
 
-class ExpenseEntryCreate(ExpenseEntryBase):
+class ExpenseEntryCreate(
+    ExpenseEntryBase,
+):
     pass
 
 
-class ExpenseEntryRead(IdMixin, UserIdMixin, TimestampMixin, ExpenseEntryBase):
+class ExpenseEntryRead(
+    IdFieldMixin,
+    UserIdFieldMixin,
+    TimestampMixin,
+    ExpenseEntryBase,
+):
     pass
 
 
-class ExpenseEntryUpdate(ExpenseEntryCreate):
-    pet_id: int | None = None
-    amount: int | None = None
-    purpose: str | None = None
+class ExpenseEntryUpdate(
+    PetIdOptionalFieldMixin,
+    ExpenseEntryCreate,
+):
+    amount: Annotated[Optional[int], Field(ge=0)]
+    purpose: Annotated[Optional[str], Field(max_length=35)]
