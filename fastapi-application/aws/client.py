@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 from aiobotocore.session import get_session
 
-from s3.config import s3_config
+from aws.config import s3_config
 
 
 class S3Client:
@@ -24,7 +24,7 @@ class S3Client:
 
     @asynccontextmanager
     async def get_client(self):
-        async with self.session.create_client("s3", **self.config) as client:
+        async with self.session.create_client("aws", **self.config) as client:
             yield client
 
     async def upload_file(

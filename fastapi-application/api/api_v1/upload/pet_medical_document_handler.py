@@ -12,7 +12,7 @@ from core.models import db_helper, MedicalRecord
 from crud.dependencies.get_service_dependencies import get_update_service_dependency
 from crud.dependencies.item_by_id import get_item_by_id
 from crud_router.elements.types import ORMService
-from s3.client import client
+from aws.client import client
 
 router = APIRouter(
     prefix=f"{settings.api.v1.files}{settings.api.v1.medical_records}",
