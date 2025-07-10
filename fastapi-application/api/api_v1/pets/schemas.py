@@ -10,7 +10,7 @@ class PetBase(BaseModel):
 
 
 class PetRead(IdFieldMixin, UserIdFieldMixin, PetBase):
-    image_url: str | None = None
+    image_url: Annotated[Optional[str], HttpUrl] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -24,4 +24,4 @@ class PetUpdate(PetCreate):
 
 
 class PetAvatarUpdate(PetUpdate):
-    image_url: HttpUrl
+    image_url: Annotated[str, HttpUrl]
