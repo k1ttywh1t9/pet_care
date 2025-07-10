@@ -1,6 +1,6 @@
 from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl, ConfigDict
 
 from api.api_v1.mixins import IdFieldMixin, UserIdFieldMixin
 
@@ -11,6 +11,8 @@ class PetBase(BaseModel):
 
 class PetRead(IdFieldMixin, UserIdFieldMixin, PetBase):
     image_url: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PetCreate(PetBase):

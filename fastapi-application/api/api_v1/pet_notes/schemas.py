@@ -1,6 +1,6 @@
 from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 from api.api_v1.mixins import TimestampMixin, IdFieldMixin, UserIdFieldMixin
 from api.api_v1.mixins.pet_id_mixin import PetIdOptionalFieldMixin, PetIdFieldMixin
@@ -15,7 +15,7 @@ class PetNoteCreate(PetNoteBase):
 
 
 class PetNoteRead(IdFieldMixin, UserIdFieldMixin, TimestampMixin, PetNoteBase):
-    pass
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PetNoteUpdate(PetIdOptionalFieldMixin, PetNoteCreate):

@@ -1,6 +1,6 @@
 from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 from api.api_v1.mixins import (
     PetIdFieldMixin,
@@ -31,7 +31,7 @@ class MedicalRecordRead(
     TimestampMixin,
     MedicalRecordBase,
 ):
-    pass
+    model_config = ConfigDict(from_attributes=True)
 
 
 class MedicalRecordUpdate(
