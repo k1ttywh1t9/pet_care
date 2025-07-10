@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, UploadFile, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from api.api_v1.pets.schemas import PetUpdate
+from api.api_v1.pets.schemas import PetAvatarUpdate
 from core.models import Pet, db_helper
 from crud.dependencies.item_by_id import get_item_by_id
 from crud.elements.update_service import UpdateService
@@ -29,7 +29,7 @@ async def set_pet_image(
         file=await image.read(),
     )
 
-    update_schema = PetUpdate(
+    update_schema = PetAvatarUpdate(
         image_url=image_url,
     )
 
