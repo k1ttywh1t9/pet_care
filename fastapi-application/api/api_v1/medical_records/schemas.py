@@ -1,6 +1,12 @@
 from typing import Annotated, Optional
 
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import (
+    BaseModel,
+    Field,
+    ConfigDict,
+    HttpUrl,
+    field_validator,
+)
 
 from api.api_v1.mixins import (
     PetIdFieldMixin,
@@ -16,7 +22,6 @@ class MedicalRecordBase(
     BaseModel,
 ):
     name: Annotated[str, Field(max_length=35)]
-    file: bytes
 
 
 class MedicalRecordCreate(
@@ -31,7 +36,7 @@ class MedicalRecordRead(
     TimestampMixin,
     MedicalRecordBase,
 ):
-    model_config = ConfigDict(from_attributes=True)
+    document_url: str
 
 
 class MedicalRecordUpdate(
@@ -39,4 +44,16 @@ class MedicalRecordUpdate(
     MedicalRecordCreate,
 ):
     name: Annotated[Optional[str], Field(max_length=35)] = None
-    content: bytes | None = None
+
+
+class MedicalRecordDocumentUpdate(
+    MedicalRecordUpdate,
+):
+    document_url: str
+
+    @field_validator("document_url", mode="after")
+    @classmethod
+    def validate_document_url(cls, url: str) -> str:
+        if url is None:
+            return None
+        return url
