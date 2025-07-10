@@ -1,24 +1,42 @@
-from pydantic import BaseModel
+from typing import Annotated, Optional
 
-from api.api_v1.mixins import UserIdMixin
-from api.api_v1.mixins.id import IdMixin, PetIdMixin
-from api.api_v1.mixins.timestamp import TimestampMixin
+from pydantic import BaseModel, Field
+
+from api.api_v1.mixins import (
+    PetIdFieldMixin,
+    IdFieldMixin,
+    UserIdFieldMixin,
+    TimestampMixin,
+    PetIdOptionalFieldMixin,
+)
 
 
-class MedicalRecordBase(PetIdMixin, BaseModel):
-    name: str
-    content: bytes
+class MedicalRecordBase(
+    PetIdFieldMixin,
+    BaseModel,
+):
+    name: Annotated[str, Field(max_length=35)]
+    file: bytes
 
 
-class MedicalRecordCreate(MedicalRecordBase):
+class MedicalRecordCreate(
+    MedicalRecordBase,
+):
     pass
 
 
-class MedicalRecordRead(IdMixin, UserIdMixin, TimestampMixin, MedicalRecordBase):
+class MedicalRecordRead(
+    IdFieldMixin,
+    UserIdFieldMixin,
+    TimestampMixin,
+    MedicalRecordBase,
+):
     pass
 
 
-class MedicalRecordUpdate(MedicalRecordCreate):
-    pet_id: int | None = None
-    name: str | None = None
-    content: str | None = None
+class MedicalRecordUpdate(
+    PetIdOptionalFieldMixin,
+    MedicalRecordCreate,
+):
+    name: Annotated[Optional[str], Field(max_length=35)]
+    content: bytes | None = None
