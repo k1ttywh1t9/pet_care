@@ -1,4 +1,4 @@
-"""create expense_entries table
+"""create expense_entry table
 
 Revision ID: 9a73c0970694
 Revises: bcfa0cdbbf4e
@@ -21,7 +21,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     op.create_table(
-        "expense_entries",
+        "expense_entry",
         sa.Column("pet_id", sa.Integer(), nullable=False),
         sa.Column("amount", sa.Integer(), nullable=False),
         sa.Column("purpose", sa.String(), nullable=True),
@@ -52,4 +52,4 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    op.drop_table("expense_entries")
+    op.drop_table("expense_entry")
