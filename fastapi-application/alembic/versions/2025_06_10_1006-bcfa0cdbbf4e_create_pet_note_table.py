@@ -41,10 +41,12 @@ def upgrade() -> None:
         sa.ForeignKeyConstraint(
             ["pet_id"],
             ["pet.id"],
+            "pet_note_pet_id_fkey",
         ),
         sa.ForeignKeyConstraint(
             ["user_id"],
             ["user.id"],
+            "pet_note_user_id_fkey",
         ),
         sa.PrimaryKeyConstraint("id"),
     )
