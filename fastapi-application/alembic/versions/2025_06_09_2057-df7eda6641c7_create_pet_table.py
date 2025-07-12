@@ -28,6 +28,7 @@ def upgrade() -> None:
         sa.ForeignKeyConstraint(
             ["user_id"],
             ["user.id"],
+            "pet_user_id_fkey",
         ),
         sa.PrimaryKeyConstraint("id"),
     )
