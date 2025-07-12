@@ -15,6 +15,7 @@ RUN poetry install
 
 COPY fastapi-application .
 
+RUN sed -i 's/\r$//' prestart.sh
 RUN chmod +x prestart.sh
 
 ENTRYPOINT ["./prestart.sh"]
