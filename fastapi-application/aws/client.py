@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 from aiobotocore.session import get_session
 
-from aws.config import s3_config
+from core.config import s3_config
 
 
 class S3Client:

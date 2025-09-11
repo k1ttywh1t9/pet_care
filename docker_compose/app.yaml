@@ -1,0 +1,13 @@
+services:
+  main-app:
+    build:
+      context: ..
+      dockerfile: docker-build/app/Dockerfile
+    container_name: pet_care_main-app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../.env
+    depends_on:
+      postgres:
+        condition: service_healthy

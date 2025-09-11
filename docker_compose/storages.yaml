@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: pet_care_example-db
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ../.env
+    
+    
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    env_file:
+      - ../.env
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+    name: "${COMPOSE_PROJECT_NAME}_pg_data"   # => pet_care_pg_data
+    labels:
+      project: "${COMPOSE_PROJECT_NAME}"      # => project=pet_care
+      role: "database"
