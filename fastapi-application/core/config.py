@@ -113,9 +113,10 @@ class Settings(BaseSettings):
         extra="allow",
     )
 
-    run: RunConfig = RunConfig()
+    
     api: ApiConfig = ApiConfig()
     db: DatabaseConfig = DatabaseConfig()
+    run: RunConfig
     access_token: AccessToken
     admin: Admin
     frontend_app_connection_config: FrontendAppConnectionConfig = FrontendAppConnectionConfig()

@@ -1,3 +1,120 @@
+# Pet care application w/ Postgres
+
+## Requirements
+
+- [Docker](https://www.docker.com/get-started)
+- [GNU Make](https://www.gnu.org/software/make/)
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/k1ttywh1t9/pet_care.git
+cd pet_care
+```
+
+### 2. Set up environment variables
+
+Create a `.env` file in the project root:
+
+```bash
+cp .env.example .env
+```
+
+Edit the `.env` file with your configuration:
+
+```ini
+# FastAPI
+FASTAPI_APP_CONFIG__RUN__HOST=0.0.0.0
+FASTAPI_APP_CONFIG__RUN__PORT=8000
+
+FASTAPI_APP_CONFIG__ACCESS_TOKEN__reset_password_token_secret=token
+FASTAPI_APP_CONFIG__ACCESS_TOKEN__verification_token_secret=token
+
+FASTAPI_APP_CONFIG__ADMIN__EMAIL=admin@example.com
+FASTAPI_APP_CONFIG__ADMIN__PASSWORD=admin
+
+# Database
+POSTGRES_DB=yourdbname
+POSTGRES_USER=yourdbuser
+POSTGRES_PASSWORD=yourdbpassword
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+
+# AWS S3
+S3_CONFIG__KEYS__access_key=key
+S3_CONFIG__KEYS__secret_key=key
+```
+
+### 3. Build and start the containers
+
+```bash
+make app
+```
+
+This will:
+- Build the Docker images
+- Start the Django and PostgreSQL containers
+- Run migrations
+- Create a superuser (if not exists)
+
+### 4. Access the application
+
+- Fastapi development server: http://localhost:8000
+- OpenAPI docs: http://localhost:8000/docs
+- PostgreSQL: accessible on port 5432 (from within Docker network)
+
+## Makefile Commands
+
+The project includes a Makefile with common commands:
+
+| Command               | Description                                      |
+|-----------------------|--------------------------------------------------|
+| `make app`            | Build and start containers in detached mode      |
+| `make app-down`       | Stop and remove containers                       | 
+
+## Project Structure
+
+```
+
+```
+
+## Database Configuration
+
+The project is pre-configured to use PostgreSQL with these default settings (can be changed in .env):
+
+- Database: `yourdbname`
+- User: `yourdbuser`
+- Password: `yourdbpassword`
+- Host: `db` (Docker service name)
+- Port: `5432`
+
+## Deployment
+
+For production deployment:
+
+
+
+```bash
+
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+
+
+
+
+
+
 SQLAlchemy create engine https://docs.sqlalchemy.org/en/20/core/engines.html#sqlalchemy.create_engine
 - Python typing https://docs.python.org/3/library/typing.html
 - pydantic settings dotenv https://docs.pydantic.dev/latest/concepts/pydantic_settings/#dotenv-env-support
