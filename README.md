@@ -47,7 +47,23 @@ S3_CONFIG__KEYS__access_key=key
 S3_CONFIG__KEYS__secret_key=key
 ```
 
-### 3. Build and start the containers
+### 3. Create JWT certificates
+
+open console in the project root then paste:
+
+```bash
+echo "creating certs"
+mkdir certs
+cd certs
+echo "Generate an RSA private key, of size 2048"
+openssl genrsa -out jwt-private.pem 2048
+echo "Extract the public key from the key pair, which can be used in a certificate"
+openssl rsa -in jwt-private.pem -outform PEM -pubout -out jwt-public.pem
+cd ..
+```
+
+
+### 4. Build and start the containers
 
 ```bash
 make app
@@ -59,7 +75,7 @@ This will:
 - Run migrations
 - Create a superuser (if not exists)
 
-### 4. Access the application
+### 5. Access the application
 
 - Fastapi development server: http://localhost:8000
 - OpenAPI docs: http://localhost:8000/docs
