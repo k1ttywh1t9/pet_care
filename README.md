@@ -1,5 +1,5 @@
 # Pet care application w/ Postgres
-
+## Remake of my old project using fresh fastapi & sqlalchemy 2 technologies
 ## Requirements
 
 - [Docker](https://www.docker.com/get-started)
