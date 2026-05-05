@@ -73,8 +73,6 @@ class FrontendAppConnectionConfig(BaseModel):
     host: str = "0.0.0.0"
     port: str = "9999"
 
-from pydantic import BaseModel
-from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class S3Keys(BaseModel):

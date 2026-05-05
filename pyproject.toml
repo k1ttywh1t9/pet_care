@@ -27,6 +27,7 @@ httpx = "^0.28.1"
 
 [tool.poetry.group.monitoring.dependencies]
 prometheus-client = "^0.25.0"
+prometheus-fastapi-instrumentator = "^7.1.0"
 
 
 [build-system]

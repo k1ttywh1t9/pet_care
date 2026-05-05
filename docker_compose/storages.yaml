@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:17-alpine
     container_name: pet_care_example-db
     ports:
       - "${POSTGRES_PORT}:${POSTGRES_PORT}"

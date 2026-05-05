@@ -1,4 +1,5 @@
 import uvicorn
+from prometheus_fastapi_instrumentator import Instrumentator
 
 from api import router as api_router
 from core.config import settings
@@ -6,6 +7,11 @@ from create_fastapi_app import create_app
 
 main_app = create_app()
 
+
+Instrumentator().instrument(
+    main_app,
+    # metric_namespace="fastapi_application",
+).expose(main_app)
 
 main_app.include_router(
     router=api_router,
