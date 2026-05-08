@@ -9,12 +9,18 @@ BASE_DIR = Path(__file__).parent.parent.parent
 DOTENV_PATH: Path = BASE_DIR / ".env"
 DOTENV_EXAMPLE_PATH: Path = BASE_DIR / ".env.example"
 
-class DatabaseConfig(BaseSettings):
-    name: str = Field(alias="POSTGRES_DB")
-    user: str = Field(alias="POSTGRES_USER")
-    password: str = Field(alias="POSTGRES_PASSWORD")
-    host: str = Field(alias="POSTGRES_HOST")
-    port: str = Field(alias="POSTGRES_PORT")
+
+class DatabaseConfig(BaseModel):
+    # name: str = Field(alias="POSTGRES_DB")
+    # user: str = Field(alias="POSTGRES_USER")
+    # password: str = Field(alias="POSTGRES_PASSWORD")
+    # host: str = Field(alias="POSTGRES_HOST")
+    # port: str = Field(alias="POSTGRES_PORT")
+    name: str
+    user: str
+    password: str
+    host: str
+    port: str
     echo: bool = False
     echo_pool: bool = False
     pool_size: int = 50
@@ -74,50 +80,40 @@ class FrontendAppConnectionConfig(BaseModel):
     port: str = "9999"
 
 
-
 class S3Keys(BaseModel):
     access_key: str
     secret_key: str
 
 
-class S3Config(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=DOTENV_PATH,
-        case_sensitive=False,
-        env_nested_delimiter="__",
-        env_prefix="S3_CONFIG__",
-        extra="allow",
-    )
-
-    endpoint_url: str = "https://s3.uz-2.srvstorage.uz"
-    region_name: str = "uz-2"
-    bucket_name: str = "test-pet-care"
-    container_public_domain: str = (
-        "https://884735f7-b340-4f03-a358-2f9fdbf28c12.srvstatic.uz"
-    )
+class S3Config(BaseModel):
+    endpoint_url: str
+    region_name: str
+    bucket_name: str
+    container_public_domain: str
     keys: S3Keys
-
-
-s3_config = S3Config()
-
 
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=(DOTENV_EXAMPLE_PATH, DOTENV_PATH),
+        env_file=(DOTENV_PATH,),
+        # env_file=(".env",),
+        env_file_encoding="utf-8",
         case_sensitive=False,
         env_nested_delimiter="__",
         env_prefix="FASTAPI_APP_CONFIG__",
         extra="allow",
     )
 
-    
-    api: ApiConfig = ApiConfig()
-    db: DatabaseConfig = DatabaseConfig()
+    db: DatabaseConfig
     run: RunConfig
     access_token: AccessToken
     admin: Admin
-    frontend_app_connection_config: FrontendAppConnectionConfig = FrontendAppConnectionConfig()
+    s3: S3Config
+    api: ApiConfig = ApiConfig()
+
+    frontend_app_connection_config: FrontendAppConnectionConfig = (
+        FrontendAppConnectionConfig()
+    )
 
 
 settings = Settings()

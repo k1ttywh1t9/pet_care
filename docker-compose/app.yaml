@@ -1,0 +1,28 @@
+services:
+  main-app:
+    build:
+      context: ..
+      dockerfile: docker-build/app/Dockerfile
+    # container_name: main-app
+    env_file:
+      - ../.env
+    ports:
+      - "${P_MAIN_APP}:8000"
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    networks:
+      # - frontend-network
+      - backend-network
+      - metrics-network
+
+networks:
+  # frontend-network:
+  #   external: true
+  #   name: ${COMPOSE_PROJECT_NAME}_frontend
+  backend-network:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_backend
+  metrics-network:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_metrics

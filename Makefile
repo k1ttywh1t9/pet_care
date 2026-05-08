@@ -1,90 +1,92 @@
+include tests/load/load_testing.mk
+
 DC = docker compose
-STORAGES_FILE = docker_compose/storages.yaml
-APP_FILE = docker_compose/app.yaml
-MONITORING_FILE = docker_compose/monitoring.yaml
-OVERRIDE_FILE = docker_compose/docker-compose.override.yaml
-LOAD_TEST_FILE = docker_compose/load_tests.yaml
+
+# Directories paths variables
+PROJECT_DIR = .
+DOCKER_COMPOSE_DIR = ./docker-compose
+
+# Files paths variables
+NETWORKS_FILE = $(DOCKER_COMPOSE_DIR)/networks.yaml
+STORAGES_FILE = ${DOCKER_COMPOSE_DIR}/storages.yaml
+APP_FILE = ${DOCKER_COMPOSE_DIR}/app.yaml
+MONITORING_FILE = ${DOCKER_COMPOSE_DIR}/monitoring.yaml
+OVERRIDE_FILE = ${DOCKER_COMPOSE_DIR}/docker-compose.override.yaml
+
+# Containers names variables
+DB_CONTAINER = postgres-db
+APP_CONTAINER = main-app
+
+# Commands variables
 EXEC = docker exec -it
-DB_CONTAINER = pet_care_example-db
-APP_CONTAINER = pet_care_main-app
-MONITORING_CONTAINER = pet_care-prometheus-1
 LOGS = docker logs
 ENV = --env-file .env
 
+# Networks management (Infra)
+# Make networks once. If exist - nothing happens.
+# Delete network only when clear all.
+.PHONY: network-up network-down
+network-up:
+	${DC} -f ${NETWORKS_FILE} ${ENV} create
+network-down:
+	${DC} -f ${NETWORKS_FILE} ${ENV} down
+
+
 # make storages
-.PHONY: storages
-storages:
+.PHONY: storages storages-down storages-logs
+storages: network-up
 	${DC} -f ${STORAGES_FILE} ${ENV} up -d
 
-.PHONY: storages-down
 storages-down:
 	${DC} -f ${STORAGES_FILE} ${ENV} down
 
-.PHONY: storages-logs
 storages-logs:
 	${LOGS} ${DB_CONTAINER} -f
 
 # make app
-.PHONY: app
-app:
+.PHONY: app app-down app-logs
+app: network-up
 	${DC} \
 	-f ${STORAGES_FILE} \
 	-f ${APP_FILE} \
-	-f ${OVERRIDE_FILE} \
 	${ENV} up --build -d
 
-.PHONY: app-down
 app-down:
 	${DC} \
 	-f ${APP_FILE} \
 	-f ${STORAGES_FILE} \
-	-f ${OVERRIDE_FILE} \
 	${ENV} down
 
-
-.PHONY: app-logs
 app-logs:
 	${LOGS} ${APP_CONTAINER} -f
 
 
 # make monitoring
-.PHONY: monitoring
-monitoring:
+.PHONY: monitoring monitoring-down monitoring-logs
+monitoring: network-up
 	${DC} \
 	-f ${MONITORING_FILE} \
-	-f ${OVERRIDE_FILE} \
 	${ENV} up --build -d
 
-.PHONY: monitoring-down
 monitoring-down:
 	${DC} \
 	-f ${MONITORING_FILE} \
-	-f ${OVERRIDE_FILE} \
 	${ENV} down
 
-
-.PHONY: monitoring-logs
 monitoring-logs:
-	${LOGS} ${MONITORING_CONTAINER} -f
-
-# make load-test
-.PHONY: load-test
-load-test:
-	${DC} \
-	-f ${APP_FILE} \
-	-f ${STORAGES_FILE} \
-	-f ${MONITORING_FILE} \
-	-f ${LOAD_TEST_FILE} \
-	-f ${OVERRIDE_FILE} \
-	${ENV} --profile test up load-tester
+	${LOGS} -f prometheus-metrics
 
 # make all
-.PHONY: all
+.PHONY: all all-down
 all: 
 	make app && \
 	make monitoring
 
-.PHONY: all-down
 all-down: 
 	make app-down && \
 	make monitoring-down
+
+
+# Специальная команда для полной зачистки
+.PHONY: prune
+prune: all-down network-down

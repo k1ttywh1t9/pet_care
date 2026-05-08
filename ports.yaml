@@ -1,0 +1,9 @@
+x-ports:
+  main-app: &p_main_app 8000
+  prometheus: &p_prometheus 9090
+  node-exporter: &p_node_exporter 9100
+  locust-app: &p_locust_app 8089
+  locust-exporter: &p_locust_exporter 9646
+  grafana: &p_grafana 3000
+  postgres-db: &p_postgres 5432
+  pgadmin: &p_pgadmin 5050

@@ -1,0 +1,1 @@
+include tests/load/locust/locust.mk

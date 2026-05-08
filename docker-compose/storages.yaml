@@ -1,15 +1,15 @@
 services:
-  postgres:
-    image: postgres:17-alpine
-    container_name: pet_care_example-db
-    ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+  postgres-db:
+    image: postgres:16.4-bookworm
+    # container_name: postgres-db
     env_file:
       - ../.env
-    
-    
+    ports:
+      - "${P_POSTGRES}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 5s
@@ -18,13 +18,21 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    # container_name: pgadmin
     env_file:
       - ../.env
     ports:
-      - "5050:80"
+      - "${P_PGADMIN}:80"
     depends_on:
-      postgres:
+      postgres-db:
         condition: service_healthy
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_backend
 
 volumes:
   postgres_data:

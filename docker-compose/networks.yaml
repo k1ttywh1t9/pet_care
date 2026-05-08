@@ -1,0 +1,20 @@
+services:
+  network-stub:
+    image: alpine
+    entrypoint: ["true"]
+
+    networks:
+      # - frontend-network
+      - backend-network
+      - metrics-network
+
+networks:
+  # frontend-network:
+  #   name: ${COMPOSE_PROJECT_NAME}_frontend
+  #   driver: bridge
+  backend-network:
+    name: ${COMPOSE_PROJECT_NAME}_backend
+    driver: bridge
+  metrics-network:
+    name: ${COMPOSE_PROJECT_NAME}_metrics
+    driver: bridge

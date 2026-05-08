@@ -1,0 +1,29 @@
+services:
+  locust-app:
+    image: locustio/locust
+    # container_name: locust-app
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py
+    ports:
+      - "${P_LOCUST_APP}:8089"
+    environment:
+      - LOCUST_HOST=http://main-app:${P_MAIN_APP}
+    networks:
+      - metrics-network
+
+  locust-exporter:
+    image: containersol/locust_exporter
+    # container_name: locust-exporter
+    ports:
+      - "${P_LOCUST_EXPORTER}:9646"
+    environment:
+      - LOCUST_EXPORTER_URI=http://locust-app:${P_LOCUST_APP}
+    networks:
+      - metrics-network
+
+
+networks:
+  metrics-network:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME}_metrics
