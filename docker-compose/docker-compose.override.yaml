@@ -1,5 +1,0 @@
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 10.255.255.0/24
